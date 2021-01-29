@@ -1,0 +1,64 @@
+Required Packages and settings: 
+```{r}
+echo = TRUE
+library(sqldf)
+library(data.table)
+library(ggplot2)
+library(dplyr)
+```
+Reading in Data
+```{r}
+StormData <- read.csv("Data/repdata_data_StormData.csv.bz2"
+                      , header = TRUE
+                      , sep = ",")
+```
+
+What it do? 
+```{r echo=TRUE}
+summary(StormData)
+str(StormData)
+head(StormData)
+```
+
+Okay, cool... There is a good bit of cleaning that we should do on this to
+do the data justice. For our purposes of answering two questions 1.)
+What sort of events are most dangerous to population health and 2.) What
+sort of events are most economically expensive; we do not require a deep level 
+of cleaning. 
+
+Lets see what we got by year: 
+```{r}
+if (dim(StormData)[2] == 37) {
+    StormData$year <- as.numeric(format(
+                                as.Date(
+                                  StormData$BGN_DATE
+                                , format = "%m/%d/%Y %H:%M:%S"), "%Y"))
+}
+hist(StormData$year, breaks = 30)
+```
+
+```{r}
+GoodStormData <- StormData[StormData$year >= 1990, ]
+```
+
+Now it looks like we're in the position of subsetting by year, and evaluating
+the different impacts of storms in regards to population health: fatalities and 
+injuries. 
+```{r}
+
+TopTen <- function(fieldName, top = 10, dataset = GoodStormData) {
+    index <- which(colnames(dataset) == fieldName)
+    field <- aggregate(dataset[, index], by = list(dataset$EVTYPE), FUN = "sum")
+    names(field) <- c("EVTYPE", fieldName)
+    field <- arrange(field, field[, 2], decreasing = T)
+    field <- head(field, n = top)
+    field <- within(field, EVTYPE <- factor(x = EVTYPE, levels = field$EVTYPE))
+    return(field)
+}
+
+#health 
+fatalities <- TopTen("FATALITIES", dataset = GoodStormData)
+injuries <- TopTen("INJURIES", dataset = GoodStormData)
+
+```
+
