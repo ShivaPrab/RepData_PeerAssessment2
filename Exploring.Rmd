@@ -1,64 +1,179 @@
 Required Packages and settings: 
-```{r}
-echo = TRUE
-library(sqldf)
+```{r echo = TRUE}
+library(tidyverse)
 library(data.table)
 library(ggplot2)
 library(dplyr)
 ```
-Reading in Data
-```{r}
+
+Reading in Data, I'll assume that you have set your Working Directory, and the 
+file downloaded accordingly off the web. 
+
+```{r echo=TRUE}
 StormData <- read.csv("Data/repdata_data_StormData.csv.bz2"
                       , header = TRUE
                       , sep = ",")
 ```
 
 What it do? 
+
 ```{r echo=TRUE}
 summary(StormData)
 str(StormData)
 head(StormData)
 ```
 
-Okay, cool... There is a good bit of cleaning that we should do on this to
-do the data justice. For our purposes of answering two questions 1.)
-What sort of events are most dangerous to population health and 2.) What
-sort of events are most economically expensive; we do not require a deep level 
-of cleaning. 
+So 38 different columns (variables), and my suspicion is that we will not end up
+utilizing all of them. For the sake of saving the CPU some work, lets go ahead 
+and condense this dataframe. 
 
-Lets see what we got by year: 
-```{r}
-if (dim(StormData)[2] == 37) {
-    StormData$year <- as.numeric(format(
-                                as.Date(
-                                  StormData$BGN_DATE
-                                , format = "%m/%d/%Y %H:%M:%S"), "%Y"))
+First we are ensuring that we are getting a non-zero number in atleast one 
+of the "fatalities, injuries, property damage, and crop damage" categories.
+After all, if they are not causing measurable damage they should not show
+up in our findings.
+
+Second, there is some cleaning we should do on the date types to make sure that 
+we are getting accurate data on the years that events are taking place. The 
+documentation alludes the distribution of weather events are heavily skewed 
+towards the later years, since the records are spare. Even though there is a 
+clear right skew to the data in regards to year I believe this problem is
+not worth a subset. 
+
+Third, we need to look at the veracity of the "EVTYPES" column, to make sure
+the events are properly recorded. According to the documentation, there are 
+only 47 event types. Lets see what we have: 
+
+```{r echo = TRUE}
+CleanStormData <- subset(StormData, (FATALITIES > 0 | INJURIES > 0 | 
+                                    PROPDMG > 0 | CROPDMG > 0)
+                                  , select =c("BGN_DATE"
+                                             ,"STATE"
+                                             ,"EVTYPE"
+                                             ,"FATALITIES"
+                                             ,"INJURIES"
+                                             ,"PROPDMG"
+                                             ,"PROPDMGEXP"
+                                             ,"CROPDMG"
+                                             ,"CROPDMGEXP"))
+
+CleanStormData$year <- as.numeric(format(
+                                  as.Date(CleanStormData$BGN_DATE
+                                        , format = "%m/%d/%Y %H:%M:%S"),"%Y"))
+
+#hist(CleanStormData$year, breaks = 10)
+CleanStormData$EVTYPE <- toupper(CleanStormData$EVTYPE)
+```
+
+
+Now, we're running into our second problem, the Property Damage and Crop Damage
+columns. These documentation suggests that we get the following: 
+
+Symbol      Magnitude 
+"B"         Billion 
+"M"         Million 
+"K"         Thousand 
+
+Simple enough. Lets see what we get. 
+```{r echo=TRUE}
+table(CleanStormData$PROPDMGEXP) 
+table(CleanStormData$CROPDMGEXP)
+```
+
+I'm making a few assumptions here: 
+
+    1.) The capitalization is user generated and has no "real" difference. A "M" 
+        will be treated the same as "m"
+
+    2.) The "H"/"h" character symbolizes a magnification of 100 
+
+    3.) The "-", "+", "0" "?" characters are missing value characters and will 
+        have magnification of 1 (identity property)
+
+    4.) The numeric "2", "3", etc. yield the appropriate 10^X magnification, 
+        where X = "2", X = "3" respectively. 
+
+With those assumptions in mind, here is the cleaning for the Economic devastation
+
+```{r echo=TRUE}
+head(toupper(CleanStormData$PROPDMGEXP),3)
+head(toupper(CleanStormData$CROPDMGEXP),3)
+
+Magnification <- function(exp) {
+    exp <- toupper(exp);
+    if (exp == "")  return (10^0);
+    if (exp == "-") return (10^0);
+    if (exp == "?") return (10^0);
+    if (exp == "+") return (10^0);
+    if (exp == "0") return (10^0);
+    if (exp == "1") return (10^1);
+    if (exp == "2") return (10^2);
+    if (exp == "3") return (10^3);
+    if (exp == "4") return (10^4);
+    if (exp == "5") return (10^5);
+    if (exp == "6") return (10^6);
+    if (exp == "7") return (10^7);
+    if (exp == "8") return (10^8);
+    if (exp == "9") return (10^9);
+    if (exp == "H") return (10^2);
+    if (exp == "K") return (10^3);
+    if (exp == "M") return (10^6);
+    if (exp == "B") return (10^9);
+    return (NA);
 }
-hist(StormData$year, breaks = 30)
-```
 
-```{r}
-GoodStormData <- StormData[StormData$year >= 1990, ]
-```
+CleanStormData$TotalPropCost <- with(CleanStormData, as.numeric(PROPDMG) 
+                               * sapply(PROPDMGEXP, Magnification))/10^9
 
-Now it looks like we're in the position of subsetting by year, and evaluating
-the different impacts of storms in regards to population health: fatalities and 
-injuries. 
-```{r}
-
-TopTen <- function(fieldName, top = 10, dataset = GoodStormData) {
-    index <- which(colnames(dataset) == fieldName)
-    field <- aggregate(dataset[, index], by = list(dataset$EVTYPE), FUN = "sum")
-    names(field) <- c("EVTYPE", fieldName)
-    field <- arrange(field, field[, 2], decreasing = T)
-    field <- head(field, n = top)
-    field <- within(field, EVTYPE <- factor(x = EVTYPE, levels = field$EVTYPE))
-    return(field)
-}
-
-#health 
-fatalities <- TopTen("FATALITIES", dataset = GoodStormData)
-injuries <- TopTen("INJURIES", dataset = GoodStormData)
+CleanStormData$TotalCropCost <- with(CleanStormData, as.numeric(CROPDMG) 
+                              * sapply(CROPDMGEXP, Magnification))/10^9
 
 ```
 
+Our final step before actually plotting and visualing our results is making 
+sure that our data is properly aggregated (by sum) and ordered. 
+
+```{r echo=TRUE}
+#Impact on Public Health
+Fatalities <- aggregate(x = list(Impact = CleanStormData$FATALITIES)
+                               , by = list(EVENT_TYPE = CleanStormData$EVTYPE)
+                               , FUN = sum)
+
+Fatalities <- Fatalities[order(Fatalities$Impact, 
+                               decreasing = TRUE),]
+
+Injuries <- aggregate(x = list(Impact = CleanStormData$FATALITIES)
+                             , by = list(EVENT_TYPE = CleanStormData$EVTYPE)
+                             , FUN = sum)
+
+Injuries <- Injuries[order(Injuries$Impact,
+                           decreasing = TRUE),] 
+
+# Impact on the Economy 
+PropertyCost <- aggregate(x = list(Impact = CleanStormData$TotalPropCost)
+                                 , by = list(EVENT_TYPE= CleanStormData$EVTYPE)
+                                 , FUN = sum) 
+
+PropertyCost <- PropertyCost[order(PropertyCost$Impact,
+                                   decreasing = TRUE),]
+
+CropCost <- aggregate(x = list(Impact = CleanStormData$TotalCropCost)
+                              , by = list(EVENT_TYPE = CleanStormData$EVTYPE)
+                              , FUN = sum) 
+
+CropCost <- CropCost[order(CropCost$Impact, 
+                           decreasing = TRUE),]
+```
+
+At this point, we are finally ready to visualize our results! using the plotting
+library "ggplot", we are going to create 2 charts. Letting us view the grouped
+comparison of each weather related event against the corresponding damage metric
+
+```{r echo=TRUE}
+
+FatalitiesPlot <- barplot(x = head(Fatalities$EVENT_TYPE, 10)
+                        , y = Fatalities$Impact)
+
+```
+
+
+Who Knew? Tornadoes = Bad 
