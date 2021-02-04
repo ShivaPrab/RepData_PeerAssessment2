@@ -1,9 +1,15 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
 Required Packages and settings: 
 ```{r echo = TRUE}
 library(tidyverse)
 library(data.table)
 library(ggplot2)
 library(dplyr)
+library(xtable)
 ```
 
 Reading in Data, I'll assume that you have set your Working Directory, and the 
@@ -60,7 +66,7 @@ CleanStormData$year <- as.numeric(format(
                                   as.Date(CleanStormData$BGN_DATE
                                         , format = "%m/%d/%Y %H:%M:%S"),"%Y"))
 
-#hist(CleanStormData$year, breaks = 10)
+hist(CleanStormData$year, breaks = 10)
 CleanStormData$EVTYPE <- toupper(CleanStormData$EVTYPE)
 ```
 
@@ -78,6 +84,8 @@ Simple enough. Lets see what we get.
 table(CleanStormData$PROPDMGEXP) 
 table(CleanStormData$CROPDMGEXP)
 ```
+
+Alright, so there are a few other characters listed, including blanks 
 
 I'm making a few assumptions here: 
 
@@ -129,10 +137,11 @@ CleanStormData$TotalCropCost <- with(CleanStormData, as.numeric(CROPDMG)
 
 ```
 
-Our final step before actually plotting and visualing our results is making 
+Our final step before actually plotting and visualizing our results is making 
 sure that our data is properly aggregated (by sum) and ordered. 
 
 ```{r echo=TRUE}
+
 #Impact on Public Health
 Fatalities <- aggregate(x = list(Impact = CleanStormData$FATALITIES)
                                , by = list(EVENT_TYPE = CleanStormData$EVTYPE)
@@ -140,13 +149,6 @@ Fatalities <- aggregate(x = list(Impact = CleanStormData$FATALITIES)
 
 Fatalities <- Fatalities[order(Fatalities$Impact, 
                                decreasing = TRUE),]
-
-Injuries <- aggregate(x = list(Impact = CleanStormData$FATALITIES)
-                             , by = list(EVENT_TYPE = CleanStormData$EVTYPE)
-                             , FUN = sum)
-
-Injuries <- Injuries[order(Injuries$Impact,
-                           decreasing = TRUE),] 
 
 # Impact on the Economy 
 PropertyCost <- aggregate(x = list(Impact = CleanStormData$TotalPropCost)
@@ -164,16 +166,80 @@ CropCost <- CropCost[order(CropCost$Impact,
                            decreasing = TRUE),]
 ```
 
-At this point, we are finally ready to visualize our results! using the plotting
-library "ggplot", we are going to create 2 charts. Letting us view the grouped
-comparison of each weather related event against the corresponding damage metric
+At this point, we are finally ready to visualize our results! 
 
 ```{r echo=TRUE}
 
-FatalitiesPlot <- barplot(x = head(Fatalities$EVENT_TYPE, 10)
-                        , y = Fatalities$Impact)
+print(xtable(head(PropertyCost, 10),
+             caption = "Top 10 Weather Events Most Harmful to Property"),
+             caption.placement = 'top',
+             type = "html",
+             include.rownames = FALSE,
+             html.table.attributes='class="table-bordered", width="100%"')
+
+
+print(xtable(head(CropCost, 10),
+             caption = "Top 10 Weather Events Most Harmful to Crops"),
+             caption.placement = 'top',
+             type = "html",
+             include.rownames = FALSE,
+             html.table.attributes='class="table-bordered", width="100%"')
+
+print(xtable(head(Fatalities, 10),
+             caption = "Top 10 Deadliest Weather Events"),
+             caption.placement = 'top',
+             type = "html",
+             include.rownames = FALSE,
+             html.table.attributes='class="table-bordered", width="100%"')
 
 ```
 
+First we are going to visualize the most damaging events to the US economy, the 
+property and weather related costs. After picking the "top 10" most dangerous 
+events in each category. Floods and droughts are bad. 
 
+```{r}
+
+CropCostPlot <- ggplot(head(CropCost,10)
+                      , aes(x = EVENT_TYPE
+                          , y = Impact)) +
+                geom_bar(stat = "Identity") + 
+                coord_flip() +
+                xlab("Event Type") + 
+                ylab("Total Crop Damage in USD (Billions)") + 
+                theme(plot.title = element_text(size = 14
+                                                , hjust = 0.5)) + 
+                ggtitle("Top 10 Weather Events Most Impactful to Crops")
+
+PropertyCostPlot <- ggplot(head(PropertyCost,10)
+                      , aes(x = EVENT_TYPE
+                          , y = Impact)) +
+                geom_bar(stat = "Identity") + 
+                coord_flip() +
+                xlab("Event Type") + 
+                ylab("Total Crop Damage in USD (Billions)") + 
+                theme(plot.title = element_text(size = 14
+                                                , hjust = 0.5)) + 
+                ggtitle("Top 10 Weather Events Most Impactful to Property")
+
+print(CropCostPlot)
+print(PropertyCostPlot)
+```
+
+```{r}
+
+FatalitiesPlot <- ggplot(head(Fatalities,10)
+                      , aes(x = EVENT_TYPE
+                          , y = Impact)) +
+                geom_bar(stat = "Identity") + 
+                coord_flip() +
+                xlab("Event Type") + 
+                ylab("Aggregated Deaths") + 
+                theme(plot.title = element_text(size = 14
+                                                , hjust = 0.5)) + 
+                ggtitle("Top 10 Deadliest Weather Events")
+
+
+print(FatalitiesPlot)
+```
 Who Knew? Tornadoes = Bad 

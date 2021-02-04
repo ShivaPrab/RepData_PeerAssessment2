@@ -1,0 +1,701 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+  \usepackage{amssymb}
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifluatex
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+Required Packages and settings:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
+\end{verbatim}
+
+\begin{verbatim}
+## v ggplot2 3.3.3     v purrr   0.3.4
+## v tibble  3.0.6     v dplyr   1.0.3
+## v tidyr   1.1.2     v stringr 1.4.0
+## v readr   1.4.0     v forcats 0.5.1
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(data.table)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'data.table'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:dplyr':
+## 
+##     between, first, last
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     transpose
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(xtable)}
+\end{Highlighting}
+\end{Shaded}
+
+Reading in Data, I'll assume that you have set your Working Directory,
+and the file downloaded accordingly off the web.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{StormData }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"Data/repdata\_data\_StormData.csv.bz2"}
+\NormalTok{                      , }\AttributeTok{header =} \ConstantTok{TRUE}
+\NormalTok{                      , }\AttributeTok{sep =} \StringTok{","}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+What it do?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(StormData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     STATE__       BGN_DATE           BGN_TIME          TIME_ZONE        
+##  Min.   : 1.0   Length:902297      Length:902297      Length:902297     
+##  1st Qu.:19.0   Class :character   Class :character   Class :character  
+##  Median :30.0   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   :31.2                                                           
+##  3rd Qu.:45.0                                                           
+##  Max.   :95.0                                                           
+##                                                                         
+##      COUNTY       COUNTYNAME           STATE              EVTYPE         
+##  Min.   :  0.0   Length:902297      Length:902297      Length:902297     
+##  1st Qu.: 31.0   Class :character   Class :character   Class :character  
+##  Median : 75.0   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   :100.6                                                           
+##  3rd Qu.:131.0                                                           
+##  Max.   :873.0                                                           
+##                                                                          
+##    BGN_RANGE          BGN_AZI           BGN_LOCATI          END_DATE        
+##  Min.   :   0.000   Length:902297      Length:902297      Length:902297     
+##  1st Qu.:   0.000   Class :character   Class :character   Class :character  
+##  Median :   0.000   Mode  :character   Mode  :character   Mode  :character  
+##  Mean   :   1.484                                                           
+##  3rd Qu.:   1.000                                                           
+##  Max.   :3749.000                                                           
+##                                                                             
+##    END_TIME           COUNTY_END COUNTYENDN       END_RANGE       
+##  Length:902297      Min.   :0    Mode:logical   Min.   :  0.0000  
+##  Class :character   1st Qu.:0    NA's:902297    1st Qu.:  0.0000  
+##  Mode  :character   Median :0                   Median :  0.0000  
+##                     Mean   :0                   Mean   :  0.9862  
+##                     3rd Qu.:0                   3rd Qu.:  0.0000  
+##                     Max.   :0                   Max.   :925.0000  
+##                                                                   
+##    END_AZI           END_LOCATI            LENGTH              WIDTH         
+##  Length:902297      Length:902297      Min.   :   0.0000   Min.   :   0.000  
+##  Class :character   Class :character   1st Qu.:   0.0000   1st Qu.:   0.000  
+##  Mode  :character   Mode  :character   Median :   0.0000   Median :   0.000  
+##                                        Mean   :   0.2301   Mean   :   7.503  
+##                                        3rd Qu.:   0.0000   3rd Qu.:   0.000  
+##                                        Max.   :2315.0000   Max.   :4400.000  
+##                                                                              
+##        F               MAG            FATALITIES          INJURIES        
+##  Min.   :0.0      Min.   :    0.0   Min.   :  0.0000   Min.   :   0.0000  
+##  1st Qu.:0.0      1st Qu.:    0.0   1st Qu.:  0.0000   1st Qu.:   0.0000  
+##  Median :1.0      Median :   50.0   Median :  0.0000   Median :   0.0000  
+##  Mean   :0.9      Mean   :   46.9   Mean   :  0.0168   Mean   :   0.1557  
+##  3rd Qu.:1.0      3rd Qu.:   75.0   3rd Qu.:  0.0000   3rd Qu.:   0.0000  
+##  Max.   :5.0      Max.   :22000.0   Max.   :583.0000   Max.   :1700.0000  
+##  NA's   :843563                                                           
+##     PROPDMG         PROPDMGEXP           CROPDMG         CROPDMGEXP       
+##  Min.   :   0.00   Length:902297      Min.   :  0.000   Length:902297     
+##  1st Qu.:   0.00   Class :character   1st Qu.:  0.000   Class :character  
+##  Median :   0.00   Mode  :character   Median :  0.000   Mode  :character  
+##  Mean   :  12.06                      Mean   :  1.527                     
+##  3rd Qu.:   0.50                      3rd Qu.:  0.000                     
+##  Max.   :5000.00                      Max.   :990.000                     
+##                                                                           
+##      WFO             STATEOFFIC         ZONENAMES            LATITUDE   
+##  Length:902297      Length:902297      Length:902297      Min.   :   0  
+##  Class :character   Class :character   Class :character   1st Qu.:2802  
+##  Mode  :character   Mode  :character   Mode  :character   Median :3540  
+##                                                           Mean   :2875  
+##                                                           3rd Qu.:4019  
+##                                                           Max.   :9706  
+##                                                           NA's   :47    
+##    LONGITUDE        LATITUDE_E     LONGITUDE_       REMARKS         
+##  Min.   :-14451   Min.   :   0   Min.   :-14455   Length:902297     
+##  1st Qu.:  7247   1st Qu.:   0   1st Qu.:     0   Class :character  
+##  Median :  8707   Median :   0   Median :     0   Mode  :character  
+##  Mean   :  6940   Mean   :1452   Mean   :  3509                     
+##  3rd Qu.:  9605   3rd Qu.:3549   3rd Qu.:  8735                     
+##  Max.   : 17124   Max.   :9706   Max.   :106220                     
+##                   NA's   :40                                        
+##      REFNUM      
+##  Min.   :     1  
+##  1st Qu.:225575  
+##  Median :451149  
+##  Mean   :451149  
+##  3rd Qu.:676723  
+##  Max.   :902297  
+## 
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{str}\NormalTok{(StormData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 'data.frame':    902297 obs. of  37 variables:
+##  $ STATE__   : num  1 1 1 1 1 1 1 1 1 1 ...
+##  $ BGN_DATE  : chr  "4/18/1950 0:00:00" "4/18/1950 0:00:00" "2/20/1951 0:00:00" "6/8/1951 0:00:00" ...
+##  $ BGN_TIME  : chr  "0130" "0145" "1600" "0900" ...
+##  $ TIME_ZONE : chr  "CST" "CST" "CST" "CST" ...
+##  $ COUNTY    : num  97 3 57 89 43 77 9 123 125 57 ...
+##  $ COUNTYNAME: chr  "MOBILE" "BALDWIN" "FAYETTE" "MADISON" ...
+##  $ STATE     : chr  "AL" "AL" "AL" "AL" ...
+##  $ EVTYPE    : chr  "TORNADO" "TORNADO" "TORNADO" "TORNADO" ...
+##  $ BGN_RANGE : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ BGN_AZI   : chr  "" "" "" "" ...
+##  $ BGN_LOCATI: chr  "" "" "" "" ...
+##  $ END_DATE  : chr  "" "" "" "" ...
+##  $ END_TIME  : chr  "" "" "" "" ...
+##  $ COUNTY_END: num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ COUNTYENDN: logi  NA NA NA NA NA NA ...
+##  $ END_RANGE : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ END_AZI   : chr  "" "" "" "" ...
+##  $ END_LOCATI: chr  "" "" "" "" ...
+##  $ LENGTH    : num  14 2 0.1 0 0 1.5 1.5 0 3.3 2.3 ...
+##  $ WIDTH     : num  100 150 123 100 150 177 33 33 100 100 ...
+##  $ F         : int  3 2 2 2 2 2 2 1 3 3 ...
+##  $ MAG       : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ FATALITIES: num  0 0 0 0 0 0 0 0 1 0 ...
+##  $ INJURIES  : num  15 0 2 2 2 6 1 0 14 0 ...
+##  $ PROPDMG   : num  25 2.5 25 2.5 2.5 2.5 2.5 2.5 25 25 ...
+##  $ PROPDMGEXP: chr  "K" "K" "K" "K" ...
+##  $ CROPDMG   : num  0 0 0 0 0 0 0 0 0 0 ...
+##  $ CROPDMGEXP: chr  "" "" "" "" ...
+##  $ WFO       : chr  "" "" "" "" ...
+##  $ STATEOFFIC: chr  "" "" "" "" ...
+##  $ ZONENAMES : chr  "" "" "" "" ...
+##  $ LATITUDE  : num  3040 3042 3340 3458 3412 ...
+##  $ LONGITUDE : num  8812 8755 8742 8626 8642 ...
+##  $ LATITUDE_E: num  3051 0 0 0 0 ...
+##  $ LONGITUDE_: num  8806 0 0 0 0 ...
+##  $ REMARKS   : chr  "" "" "" "" ...
+##  $ REFNUM    : num  1 2 3 4 5 6 7 8 9 10 ...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(StormData)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   STATE__           BGN_DATE BGN_TIME TIME_ZONE COUNTY COUNTYNAME STATE  EVTYPE
+## 1       1  4/18/1950 0:00:00     0130       CST     97     MOBILE    AL TORNADO
+## 2       1  4/18/1950 0:00:00     0145       CST      3    BALDWIN    AL TORNADO
+## 3       1  2/20/1951 0:00:00     1600       CST     57    FAYETTE    AL TORNADO
+## 4       1   6/8/1951 0:00:00     0900       CST     89    MADISON    AL TORNADO
+## 5       1 11/15/1951 0:00:00     1500       CST     43    CULLMAN    AL TORNADO
+## 6       1 11/15/1951 0:00:00     2000       CST     77 LAUDERDALE    AL TORNADO
+##   BGN_RANGE BGN_AZI BGN_LOCATI END_DATE END_TIME COUNTY_END COUNTYENDN
+## 1         0                                               0         NA
+## 2         0                                               0         NA
+## 3         0                                               0         NA
+## 4         0                                               0         NA
+## 5         0                                               0         NA
+## 6         0                                               0         NA
+##   END_RANGE END_AZI END_LOCATI LENGTH WIDTH F MAG FATALITIES INJURIES PROPDMG
+## 1         0                      14.0   100 3   0          0       15    25.0
+## 2         0                       2.0   150 2   0          0        0     2.5
+## 3         0                       0.1   123 2   0          0        2    25.0
+## 4         0                       0.0   100 2   0          0        2     2.5
+## 5         0                       0.0   150 2   0          0        2     2.5
+## 6         0                       1.5   177 2   0          0        6     2.5
+##   PROPDMGEXP CROPDMG CROPDMGEXP WFO STATEOFFIC ZONENAMES LATITUDE LONGITUDE
+## 1          K       0                                         3040      8812
+## 2          K       0                                         3042      8755
+## 3          K       0                                         3340      8742
+## 4          K       0                                         3458      8626
+## 5          K       0                                         3412      8642
+## 6          K       0                                         3450      8748
+##   LATITUDE_E LONGITUDE_ REMARKS REFNUM
+## 1       3051       8806              1
+## 2          0          0              2
+## 3          0          0              3
+## 4          0          0              4
+## 5          0          0              5
+## 6          0          0              6
+\end{verbatim}
+
+So 38 different columns (variables), and my suspicion is that we will
+not end up utilizing all of them. For the sake of saving the CPU some
+work, lets go ahead and condense this dataframe.
+
+First we are ensuring that we are getting a non-zero number in atleast
+one of the ``fatalities, injuries, property damage, and crop damage''
+categories. After all, if they are not causing measurable damage they
+should not show up in our findings.
+
+Second, there is some cleaning we should do on the date types to make
+sure that we are getting accurate data on the years that events are
+taking place. The documentation alludes the distribution of weather
+events are heavily skewed towards the later years, since the records are
+spare. Even though there is a clear right skew to the data in regards to
+year I believe this problem is not worth a subset.
+
+Third, we need to look at the veracity of the ``EVTYPES'' column, to
+make sure the events are properly recorded. According to the
+documentation, there are only 47 event types. Lets see what we have:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CleanStormData }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(StormData, (FATALITIES }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{|}\NormalTok{ INJURIES }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{|} 
+\NormalTok{                                    PROPDMG }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{|}\NormalTok{ CROPDMG }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{)}
+\NormalTok{                                  , }\AttributeTok{select =}\FunctionTok{c}\NormalTok{(}\StringTok{"BGN\_DATE"}
+\NormalTok{                                             ,}\StringTok{"STATE"}
+\NormalTok{                                             ,}\StringTok{"EVTYPE"}
+\NormalTok{                                             ,}\StringTok{"FATALITIES"}
+\NormalTok{                                             ,}\StringTok{"INJURIES"}
+\NormalTok{                                             ,}\StringTok{"PROPDMG"}
+\NormalTok{                                             ,}\StringTok{"PROPDMGEXP"}
+\NormalTok{                                             ,}\StringTok{"CROPDMG"}
+\NormalTok{                                             ,}\StringTok{"CROPDMGEXP"}\NormalTok{))}
+
+\NormalTok{CleanStormData}\SpecialCharTok{$}\NormalTok{year }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{format}\NormalTok{(}
+                                  \FunctionTok{as.Date}\NormalTok{(CleanStormData}\SpecialCharTok{$}\NormalTok{BGN\_DATE}
+\NormalTok{                                        , }\AttributeTok{format =} \StringTok{"\%m/\%d/\%Y \%H:\%M:\%S"}\NormalTok{),}\StringTok{"\%Y"}\NormalTok{))}
+
+\FunctionTok{hist}\NormalTok{(CleanStormData}\SpecialCharTok{$}\NormalTok{year, }\AttributeTok{breaks =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Exploring_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CleanStormData}\SpecialCharTok{$}\NormalTok{EVTYPE }\OtherTok{\textless{}{-}} \FunctionTok{toupper}\NormalTok{(CleanStormData}\SpecialCharTok{$}\NormalTok{EVTYPE)}
+\end{Highlighting}
+\end{Shaded}
+
+Now, we're running into our second problem, the Property Damage and Crop
+Damage columns. These documentation suggests that we get the following:
+
+Symbol Magnitude ``B'' Billion ``M'' Million ``K'' Thousand
+
+Simple enough. Lets see what we get.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(CleanStormData}\SpecialCharTok{$}\NormalTok{PROPDMGEXP) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##             -      +      0      2      3      4      5      6      7      B 
+##  11585      1      5    210      1      1      4     18      3      3     40 
+##      h      H      K      m      M 
+##      1      6 231428      7  11320
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(CleanStormData}\SpecialCharTok{$}\NormalTok{CROPDMGEXP)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##             ?      0      B      k      K      m      M 
+## 152664      6     17      7     21  99932      1   1985
+\end{verbatim}
+
+Alright, so there are a few other characters listed, including blanks
+
+I'm making a few assumptions here:
+
+\begin{verbatim}
+1.) The capitalization is user generated and has no "real" difference. A "M" 
+    will be treated the same as "m"
+
+2.) The "H"/"h" character symbolizes a magnification of 100 
+
+3.) The "-", "+", "0" "?" characters are missing value characters and will 
+    have magnification of 1 (identity property)
+
+4.) The numeric "2", "3", etc. yield the appropriate 10^X magnification, 
+    where X = "2", X = "3" respectively. 
+\end{verbatim}
+
+With those assumptions in mind, here is the cleaning for the Economic
+devastation
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{toupper}\NormalTok{(CleanStormData}\SpecialCharTok{$}\NormalTok{PROPDMGEXP),}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "K" "K" "K"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(}\FunctionTok{toupper}\NormalTok{(CleanStormData}\SpecialCharTok{$}\NormalTok{CROPDMGEXP),}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "" "" ""
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Magnification }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(exp) \{}
+\NormalTok{    exp }\OtherTok{\textless{}{-}} \FunctionTok{toupper}\NormalTok{(exp);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{""}\NormalTok{)  }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{0}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"{-}"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{0}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"?"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{0}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"+"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{0}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"0"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{0}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"1"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{1}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"2"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"3"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"4"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{4}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"5"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{5}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"6"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{6}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"7"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{7}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"8"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{8}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"9"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{9}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"H"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"K"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{3}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"M"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{6}\NormalTok{);}
+    \ControlFlowTok{if}\NormalTok{ (exp }\SpecialCharTok{==} \StringTok{"B"}\NormalTok{) }\FunctionTok{return}\NormalTok{ (}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{9}\NormalTok{);}
+    \FunctionTok{return}\NormalTok{ (}\ConstantTok{NA}\NormalTok{);}
+\NormalTok{\}}
+
+\NormalTok{CleanStormData}\SpecialCharTok{$}\NormalTok{TotalPropCost }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(CleanStormData, }\FunctionTok{as.numeric}\NormalTok{(PROPDMG) }
+                               \SpecialCharTok{*} \FunctionTok{sapply}\NormalTok{(PROPDMGEXP, Magnification))}\SpecialCharTok{/}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{9}
+
+\NormalTok{CleanStormData}\SpecialCharTok{$}\NormalTok{TotalCropCost }\OtherTok{\textless{}{-}} \FunctionTok{with}\NormalTok{(CleanStormData, }\FunctionTok{as.numeric}\NormalTok{(CROPDMG) }
+                              \SpecialCharTok{*} \FunctionTok{sapply}\NormalTok{(CROPDMGEXP, Magnification))}\SpecialCharTok{/}\DecValTok{10}\SpecialCharTok{\^{}}\DecValTok{9}
+\end{Highlighting}
+\end{Shaded}
+
+Our final step before actually plotting and visualizing our results is
+making sure that our data is properly aggregated (by sum) and ordered.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Impact on Public Health}
+\NormalTok{Fatalities }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(}\AttributeTok{x =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Impact =}\NormalTok{ CleanStormData}\SpecialCharTok{$}\NormalTok{FATALITIES)}
+\NormalTok{                               , }\AttributeTok{by =} \FunctionTok{list}\NormalTok{(}\AttributeTok{EVENT\_TYPE =}\NormalTok{ CleanStormData}\SpecialCharTok{$}\NormalTok{EVTYPE)}
+\NormalTok{                               , }\AttributeTok{FUN =}\NormalTok{ sum)}
+
+\NormalTok{Fatalities }\OtherTok{\textless{}{-}}\NormalTok{ Fatalities[}\FunctionTok{order}\NormalTok{(Fatalities}\SpecialCharTok{$}\NormalTok{Impact, }
+                               \AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{),]}
+
+\CommentTok{\# Impact on the Economy }
+\NormalTok{PropertyCost }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(}\AttributeTok{x =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Impact =}\NormalTok{ CleanStormData}\SpecialCharTok{$}\NormalTok{TotalPropCost)}
+\NormalTok{                                 , }\AttributeTok{by =} \FunctionTok{list}\NormalTok{(}\AttributeTok{EVENT\_TYPE=}\NormalTok{ CleanStormData}\SpecialCharTok{$}\NormalTok{EVTYPE)}
+\NormalTok{                                 , }\AttributeTok{FUN =}\NormalTok{ sum) }
+
+\NormalTok{PropertyCost }\OtherTok{\textless{}{-}}\NormalTok{ PropertyCost[}\FunctionTok{order}\NormalTok{(PropertyCost}\SpecialCharTok{$}\NormalTok{Impact,}
+                                   \AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{),]}
+
+\NormalTok{CropCost }\OtherTok{\textless{}{-}} \FunctionTok{aggregate}\NormalTok{(}\AttributeTok{x =} \FunctionTok{list}\NormalTok{(}\AttributeTok{Impact =}\NormalTok{ CleanStormData}\SpecialCharTok{$}\NormalTok{TotalCropCost)}
+\NormalTok{                              , }\AttributeTok{by =} \FunctionTok{list}\NormalTok{(}\AttributeTok{EVENT\_TYPE =}\NormalTok{ CleanStormData}\SpecialCharTok{$}\NormalTok{EVTYPE)}
+\NormalTok{                              , }\AttributeTok{FUN =}\NormalTok{ sum) }
+
+\NormalTok{CropCost }\OtherTok{\textless{}{-}}\NormalTok{ CropCost[}\FunctionTok{order}\NormalTok{(CropCost}\SpecialCharTok{$}\NormalTok{Impact, }
+                           \AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{),]}
+\end{Highlighting}
+\end{Shaded}
+
+At this point, we are finally ready to visualize our results!
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{xtable}\NormalTok{(}\FunctionTok{head}\NormalTok{(PropertyCost, }\DecValTok{10}\NormalTok{),}
+             \AttributeTok{caption =} \StringTok{"Top 10 Weather Events Most Harmful to Property"}\NormalTok{),}
+             \AttributeTok{caption.placement =} \StringTok{\textquotesingle{}top\textquotesingle{}}\NormalTok{,}
+             \AttributeTok{type =} \StringTok{"html"}\NormalTok{,}
+             \AttributeTok{include.rownames =} \ConstantTok{FALSE}\NormalTok{,}
+             \AttributeTok{html.table.attributes=}\StringTok{\textquotesingle{}class="table{-}bordered", width="100\%"\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <!-- html table generated in R 4.0.3 by xtable 1.8-4 package -->
+## <!-- Tue Feb  2 14:14:30 2021 -->
+## <table class="table-bordered", width="100%">
+## <caption align="top"> Top 10 Weather Events Most Harmful to Property </caption>
+## <tr> <th> EVENT_TYPE </th> <th> Impact </th>  </tr>
+##   <tr> <td> FLOOD </td> <td align="right"> 144.66 </td> </tr>
+##   <tr> <td> HURRICANE/TYPHOON </td> <td align="right"> 69.31 </td> </tr>
+##   <tr> <td> TORNADO </td> <td align="right"> 56.95 </td> </tr>
+##   <tr> <td> STORM SURGE </td> <td align="right"> 43.32 </td> </tr>
+##   <tr> <td> FLASH FLOOD </td> <td align="right"> 16.82 </td> </tr>
+##   <tr> <td> HAIL </td> <td align="right"> 15.74 </td> </tr>
+##   <tr> <td> HURRICANE </td> <td align="right"> 11.87 </td> </tr>
+##   <tr> <td> TROPICAL STORM </td> <td align="right"> 7.70 </td> </tr>
+##   <tr> <td> WINTER STORM </td> <td align="right"> 6.69 </td> </tr>
+##   <tr> <td> HIGH WIND </td> <td align="right"> 5.27 </td> </tr>
+##    </table>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{xtable}\NormalTok{(}\FunctionTok{head}\NormalTok{(CropCost, }\DecValTok{10}\NormalTok{),}
+             \AttributeTok{caption =} \StringTok{"Top 10 Weather Events Most Harmful to Crops"}\NormalTok{),}
+             \AttributeTok{caption.placement =} \StringTok{\textquotesingle{}top\textquotesingle{}}\NormalTok{,}
+             \AttributeTok{type =} \StringTok{"html"}\NormalTok{,}
+             \AttributeTok{include.rownames =} \ConstantTok{FALSE}\NormalTok{,}
+             \AttributeTok{html.table.attributes=}\StringTok{\textquotesingle{}class="table{-}bordered", width="100\%"\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <!-- html table generated in R 4.0.3 by xtable 1.8-4 package -->
+## <!-- Tue Feb  2 14:14:30 2021 -->
+## <table class="table-bordered", width="100%">
+## <caption align="top"> Top 10 Weather Events Most Harmful to Crops </caption>
+## <tr> <th> EVENT_TYPE </th> <th> Impact </th>  </tr>
+##   <tr> <td> DROUGHT </td> <td align="right"> 13.97 </td> </tr>
+##   <tr> <td> FLOOD </td> <td align="right"> 5.66 </td> </tr>
+##   <tr> <td> RIVER FLOOD </td> <td align="right"> 5.03 </td> </tr>
+##   <tr> <td> ICE STORM </td> <td align="right"> 5.02 </td> </tr>
+##   <tr> <td> HAIL </td> <td align="right"> 3.03 </td> </tr>
+##   <tr> <td> HURRICANE </td> <td align="right"> 2.74 </td> </tr>
+##   <tr> <td> HURRICANE/TYPHOON </td> <td align="right"> 2.61 </td> </tr>
+##   <tr> <td> FLASH FLOOD </td> <td align="right"> 1.42 </td> </tr>
+##   <tr> <td> EXTREME COLD </td> <td align="right"> 1.31 </td> </tr>
+##   <tr> <td> FROST/FREEZE </td> <td align="right"> 1.09 </td> </tr>
+##    </table>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(}\FunctionTok{xtable}\NormalTok{(}\FunctionTok{head}\NormalTok{(Fatalities, }\DecValTok{10}\NormalTok{),}
+             \AttributeTok{caption =} \StringTok{"Top 10 Deadliest Weather Events"}\NormalTok{),}
+             \AttributeTok{caption.placement =} \StringTok{\textquotesingle{}top\textquotesingle{}}\NormalTok{,}
+             \AttributeTok{type =} \StringTok{"html"}\NormalTok{,}
+             \AttributeTok{include.rownames =} \ConstantTok{FALSE}\NormalTok{,}
+             \AttributeTok{html.table.attributes=}\StringTok{\textquotesingle{}class="table{-}bordered", width="100\%"\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## <!-- html table generated in R 4.0.3 by xtable 1.8-4 package -->
+## <!-- Tue Feb  2 14:14:30 2021 -->
+## <table class="table-bordered", width="100%">
+## <caption align="top"> Top 10 Deadliest Weather Events </caption>
+## <tr> <th> EVENT_TYPE </th> <th> Impact </th>  </tr>
+##   <tr> <td> TORNADO </td> <td align="right"> 5633.00 </td> </tr>
+##   <tr> <td> EXCESSIVE HEAT </td> <td align="right"> 1903.00 </td> </tr>
+##   <tr> <td> FLASH FLOOD </td> <td align="right"> 978.00 </td> </tr>
+##   <tr> <td> HEAT </td> <td align="right"> 937.00 </td> </tr>
+##   <tr> <td> LIGHTNING </td> <td align="right"> 816.00 </td> </tr>
+##   <tr> <td> TSTM WIND </td> <td align="right"> 504.00 </td> </tr>
+##   <tr> <td> FLOOD </td> <td align="right"> 470.00 </td> </tr>
+##   <tr> <td> RIP CURRENT </td> <td align="right"> 368.00 </td> </tr>
+##   <tr> <td> HIGH WIND </td> <td align="right"> 248.00 </td> </tr>
+##   <tr> <td> AVALANCHE </td> <td align="right"> 224.00 </td> </tr>
+##    </table>
+\end{verbatim}
+
+First we are going to visualize the most damaging events to the US
+economy, the property and weather related costs. After picking the ``top
+10'' most dangerous events in each category. Floods and droughts are
+bad.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{CropCostPlot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{head}\NormalTok{(CropCost,}\DecValTok{10}\NormalTok{)}
+\NormalTok{                      , }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ EVENT\_TYPE}
+\NormalTok{                          , }\AttributeTok{y =}\NormalTok{ Impact)) }\SpecialCharTok{+}
+                \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"Identity"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+                \FunctionTok{xlab}\NormalTok{(}\StringTok{"Event Type"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{ylab}\NormalTok{(}\StringTok{"Total Crop Damage in USD (Billions)"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{14}
+\NormalTok{                                                , }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+} 
+                \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Top 10 Weather Events Most Impactful to Crops"}\NormalTok{)}
+
+\NormalTok{PropertyCostPlot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{head}\NormalTok{(PropertyCost,}\DecValTok{10}\NormalTok{)}
+\NormalTok{                      , }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ EVENT\_TYPE}
+\NormalTok{                          , }\AttributeTok{y =}\NormalTok{ Impact)) }\SpecialCharTok{+}
+                \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"Identity"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+                \FunctionTok{xlab}\NormalTok{(}\StringTok{"Event Type"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{ylab}\NormalTok{(}\StringTok{"Total Crop Damage in USD (Billions)"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{14}
+\NormalTok{                                                , }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+} 
+                \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Top 10 Weather Events Most Impactful to Property"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(CropCostPlot)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Exploring_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(PropertyCostPlot)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Exploring_files/figure-latex/unnamed-chunk-9-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{FatalitiesPlot }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{head}\NormalTok{(Fatalities,}\DecValTok{10}\NormalTok{)}
+\NormalTok{                      , }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ EVENT\_TYPE}
+\NormalTok{                          , }\AttributeTok{y =}\NormalTok{ Impact)) }\SpecialCharTok{+}
+                \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"Identity"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+}
+                \FunctionTok{xlab}\NormalTok{(}\StringTok{"Event Type"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{ylab}\NormalTok{(}\StringTok{"Aggregated Deaths"}\NormalTok{) }\SpecialCharTok{+} 
+                \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{14}
+\NormalTok{                                                , }\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{)) }\SpecialCharTok{+} 
+                \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Top 10 Deadliest Weather Events"}\NormalTok{)}
+
+
+\FunctionTok{print}\NormalTok{(FatalitiesPlot)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Exploring_files/figure-latex/unnamed-chunk-10-1.pdf}
+Who Knew? Tornadoes = Bad
+
+\end{document}
